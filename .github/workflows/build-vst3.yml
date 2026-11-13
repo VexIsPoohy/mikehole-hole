@@ -1,0 +1,45 @@
+name: Build Linux VST3
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+
+      - name: Install JUCE build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libasound2-dev \
+            libx11-dev \
+            libxrandr-dev \
+            libxinerama-dev \
+            libxcursor-dev \
+            libxcomposite-dev \
+            libgl1-mesa-dev \
+            libgtk-3-dev \
+            libfreetype-dev \
+            libfontconfig1-dev
+
+      - name: Configure
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build VST3
+        run: cmake --build build --config Release --parallel 2
+
+      - name: Upload VST3
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mike-Holes-Hole-Linux-x86_64-VST3
+          path: build/MikeHolesHole_artefacts/Release/VST3/Mike Holes Hole.vst3
+          if-no-files-found: error
