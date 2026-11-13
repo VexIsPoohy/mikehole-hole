@@ -27,6 +27,9 @@ also be started manually. To download its output, open the repository's
 **Actions** tab, select **Build Linux VST3**, open a successful run, and download
 the `Mike-Holes-Hole-Linux-x86_64-VST3` artifact.
 
+The **Build Windows VST3** workflow similarly uploads a Windows x64 bundle as
+`Mike-Holes-Hole-Windows-x64-VST3`.
+
 The original source attachments did not include `Presets.h` or the Mike image
 resource. `Source/Presets.h` supplies working preset definitions; the editor
 continues to work without the optional image.
